@@ -101,8 +101,6 @@ Problem 3.
 
 ```{r}
 # Load required libraries
-install.packages("DHARMa")
-install.packages("MuMIn")
 library(tidyverse)  # For data wrangling and ggplot
 library(DHARMa)     # For checking model diagnostics
 library(MuMIn)      # For AIC model comparison
@@ -111,7 +109,7 @@ library(broom)      # For tidying model output (optional but useful)
 ```
 
 ```{r}
-nest <- read_csv("/data/occdist.csv")
+nest <- read_csv("../data/occdist.csv")
 ```
 
 a. In this dataset, the "sp" variable represents Swift Parrot occupancy.
