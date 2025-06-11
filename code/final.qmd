@@ -97,3 +97,30 @@ ggplot(sst_filtered, aes(x = month, y = mean_monthly_sst, group
 
 ```
 
+Problem 3. 
+
+```{r}
+# Load required libraries
+install.packages("DHARMa")
+install.packages("MuMIn")
+library(tidyverse)  # For data wrangling and ggplot
+library(DHARMa)     # For checking model diagnostics
+library(MuMIn)      # For AIC model comparison
+library(broom)      # For tidying model output (optional but useful)
+
+```
+
+```{r}
+nest <- read_csv("/data/occdist.csv")
+```
+
+a. In this dataset, the "sp" variable represents Swift Parrot occupancy.
+1 indicates that the parrot used a nest box during the season. The value of 
+0 indicates that a box was not used/occupied. 
+
+b. The main distinction is that the nest box intervention's main conservation goal is 
+for Swift Parrots, a species that is critically endangered. 
+Swift Parrot availability may be lowered by non-target or competing species 
+like Common Starlings and Tree Martins, which may also inhabit nest boxes.
+
+
