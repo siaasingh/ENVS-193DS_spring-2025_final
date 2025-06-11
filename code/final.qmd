@@ -1,7 +1,7 @@
 ---
 title: "ENVS 193DS Final Project: [Your Project Title Here]"
 author: "Siaa Singh"
-date: "June 10th 2025"
+date: "06/10/2025"
 format: html
 ---
 ```{r}
@@ -122,5 +122,66 @@ b. The main distinction is that the nest box intervention's main conservation go
 for Swift Parrots, a species that is critically endangered. 
 Swift Parrot availability may be lowered by non-target or competing species 
 like Common Starlings and Tree Martins, which may also inhabit nest boxes.
+
+c. Nest box occupancy was measured in 2016 and 2019, which are referred to as the two "seasons" in this study. Researchers can determine whether temporal variation influences nest box use by comparing the environmental conditions and Swift Parrot occupancy levels in these years.
+
+d. 
+```{r}
+# Model table for Problem 3d
+library(tibble)
+
+model_table <- tibble::tibble(
+  `Model #` = c(1, 2, 3, 4),
+  `Season Included` = c("No", "Yes", "Yes", "No"),
+  `Distance to Edge Included` = c("No", "Yes", "No", "Yes"),
+  `Model Description` = c(
+    "Null model — assumes constant occupancy",
+    "Saturated model — includes both season and distance",
+    "Season-only model",
+    "Distance-only model"
+  )
+)
+
+# View the model table
+model_table
+
+```
+
+e. 
+```{r}
+# Run all logistic regression models for Swift Parrot occupancy
+
+# Null model – no predictors
+model1 <- glm(sp ~ 1, data = nest, family = binomial)
+
+# Saturated model – includes both season and distance
+model2 <- glm(sp ~ season + `edge distance`, data = nest, family = binomial)
+
+# Season-only model
+model3 <- glm(sp ~ season, data = nest, family = binomial)
+
+# Distance-only model
+model4 <- glm(sp ~ `edge distance`, data = nest, family = binomial)
+
+```
+
+3f 
+```{r}
+# Load DHARMa (only if not already loaded)
+library(DHARMa)
+
+# Simulate residuals for each model
+sim1 <- simulateResiduals(model1)
+sim2 <- simulateResiduals(model2)
+sim3 <- simulateResiduals(model3)
+sim4 <- simulateResiduals(model4)
+
+# Plot residuals for each model
+plot(sim1, main = "Model 1: Null Model")
+plot(sim2, main = "Model 2: Saturated Model")
+plot(sim3, main = "Model 3: Season-only Model")
+plot(sim4, main = "Model 4: Distance-only Model")
+
+```
 
 
