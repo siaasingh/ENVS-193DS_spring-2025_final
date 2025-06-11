@@ -1,0 +1,39 @@
+---
+title: "ENVS 193DS Final Project: [Your Project Title Here]"
+author: "Siaa Singh"
+date: "June 10th 2025"
+format: html
+---
+```{r}
+# Load required libraries
+library(tidyverse)
+library(readr)
+library(ggplot2)
+library(dplyr)
+
+# Read in the SST dataset
+sst <- read_csv("data/SST_update2023.csv")
+```
+
+Problem 1 
+a. a. Transparent Statistical Methods
+Part 1: The author used a correlation test, likely Pearson’s correlation, to evaluate the 
+relationship between distance from the headwater and total nitrogen load. This is implied by the phrasing “correlation” and the numeric p-value. The author used an Analysis of Variance (ANOVA) to 
+compare the mean nitrogen loads between different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands), as indicated by the reference to 
+“average nitrogen load” and the overall p-value for group differences.
+
+b. Descriptive Statistics by Source: Including means and standard deviations for nitrogen 
+load by each source category would give readers a clearer picture of how nitrogen contributions 
+differ across land use types.Sample Size per Source: Providing the number of observations 
+per nitrogen source would help readers understand the reliability of the ANOVA results. 
+For example, if one group had a very small sample size, its contribution to the test outcome 
+might be questionable.
+
+c. Nitrogen load increased with distance from the headwater, suggesting a spatial accumulation effect along the river. A correlation test was used to assess this relationship 
+(test: Pearson’s correlation; r = [correlation coefficient], p = 0.03, α = 0.05).
+There were statistically significant differences in nitrogen load among the five source categories, suggesting that some sources contribute disproportionately to nitrogen levels in the delta. 
+An ANOVA was used to compare group means (test: ANOVA; F = [test statistic], df = 
+[degrees of freedom], p = 0.02, α = 0.05).
+
+
+
