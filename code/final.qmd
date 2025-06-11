@@ -182,4 +182,134 @@ plot(sim4, main = "Model 4: Distance-only Model")
 
 ```
 
+3g. 
+```{r}
+# Load MuMIn if not already
+library(MuMIn)
+
+# Compare models using AIC
+model_selection <- AIC(model1, model2, model3, model4)
+
+# Print AIC table (this is part of your output)
+model_selection
+
+```
+
+The best model as determined by Akaike’s Information Criterion (AIC) was the saturated model 
+(model 2), which included both season and distance from forest edge as predictors of Swift 
+Parrot nest box occupancy. This model had the lowest AIC value (226.21), indicating it 
+provides the best trade-off between goodness of fit and model complexity among those tested.
+
+3f. 
+```{r}
+# Load required packages
+library(ggplot2)
+library(dplyr)
+
+# Create a new dataset for predictions across edge distances in both seasons
+prediction_data <- expand.grid(
+  `edge distance` = seq(min(nest$`edge distance`), max(nest$`edge distance`), length.out = 100),
+  season = unique(nest$season)
+)
+
+# Generate predictions with confidence intervals using model2
+predictions <- predict(model2, newdata = prediction_data, type = "response", se.fit = TRUE)
+
+# Bind predictions to the prediction_data
+prediction_data$fit <- predictions$fit
+prediction_data$lower <- predictions$fit - 1.96 * predictions$se.fit
+prediction_data$upper <- predictions$fit + 1.96 * predictions$se.fit
+
+# Plot model predictions + underlying data
+ggplot() +
+  # Add raw occupancy data
+  geom_jitter(data = nest, aes(x = `edge distance`, y = sp, color = as.factor(season)), width = 15, height = 0.03, alpha = 0.6) +
+  
+  # Add prediction line
+  geom_line(data = prediction_data, aes(x = `edge distance`, y = fit, color = as.factor(season)), size = 1.2) +
+  
+  # Add 95% confidence ribbon
+  geom_ribbon(data = prediction_data, aes(x = `edge distance`, ymin = lower, ymax = upper, fill = as.factor(season)), alpha = 0.2) +
+  
+  # Customize labels and appearance
+  labs(
+    x = "Distance from Forest Edge (meters)",
+    y = "Probability of Swift Parrot Nest Box Occupancy",
+    color = "Season",
+    fill = "Season",
+    title = "Predicted Probability of Swift Parrot Nest Box Occupancy by Distance from Forest Edge"
+  ) +
+  theme_minimal() +                                # Clean theme
+  theme(
+    panel.grid = element_blank(),                  # Remove gridlines
+    plot.title = element_text(hjust = 0.5)         # Center title
+  ) +
+  scale_color_manual(values = c("darkorange", "steelblue")) +
+  scale_fill_manual(values = c("darkorange", "steelblue"))
+
+```
+
+3i. 
+This figure displays the model-predicted probability of Swift Parrot (Lathamus discolor) 
+nest box occupancy (solid lines) as a function of distance from the forest edge (in meters), 
+for the two study seasons: 2016 and 2019. Observed occupancy values (1 = occupied, 0 = unoccupied) 
+are jittered in the background as points. Shaded ribbons represent 95% confidence intervals 
+around predictions. The model suggests that probability of occupancy declines with increasing 
+distance from the forest edge and differs slightly by season.
+Data source: Stojanovic et al. (2021), Dryad, https://doi.org/10.5061/dryad.83bk3j9sb
+
+3j. 
+```{r}
+# Create new data frame for prediction
+prediction_data <- expand.grid(
+  `edge distance` = c(0, 900),
+  season = c(2016, 2019)
+)
+
+# Predict using the best model (model2)
+# Set type = "response" to get probabilities
+predicted_probs <- predict(model2, newdata = prediction_data, type = "response", se.fit = TRUE)
+
+# Combine predictions with original new data
+prediction_results <- prediction_data %>%
+  mutate(
+    predicted_prob = predicted_probs$fit,
+    lower_CI = predicted_probs$fit - 1.96 * predicted_probs$se.fit,
+    upper_CI = predicted_probs$fit + 1.96 * predicted_probs$se.fit
+  )
+
+# Show the final prediction table
+prediction_results
+
+```
+
+3k. 
+Based on our results, Swift Parrot nest box occupancy was highest at the forest edge (0 m) in both seasons. A predicted probability of 0.48 in 2016 and 0.30 in 2019. 
+At 900 m from the edge, predicted occupancy declined sharply to 0.12 in 2016 and 0.06 in 2019. 
+The figure from part h supports this trend, showing a clear decrease in occupancy with increasing distance, and slightly higher occupancy rates across all distances in 2016. This pattern suggests 
+that proximity to forest edge provides ecological advantages—such as better food availability or nesting habitat—which may be critical for Swift Parrots. The stronger edge effect in 2016 may also reflect variation in habitat quality or population size between the two years. 
+
+
+4a. 
+4a. Comparing Visualizations
+1. How are the visualizations different from each other in the way you have represented your data?
+The affective visualization (HW 3) uses color to represent mood and emphasizes emotional impact, with bold colors and labels to highlight personal experience. In contrast, the exploratory visualization
+(HW 2) presents the data more neutrally and statistically, using a boxplot to summarize the distribution of hours outdoors across homework load categories.
+
+2. What similarities do you see between all your visualizations?
+Both visualizations explore the relationship between daily behavior (time outdoors) and another variable—either emotional state or workload. They also use clear axes and labeling to 
+communicate their message effectively, and both make categorical comparisons (day/mood vs. 
+homework load).
+
+3. What patterns do you see in each visualization? Are these different between visualizations? 
+If so, why?
+In the affective plot, I see that days labeled "Happy" are associated with higher average outdoor hours, suggesting a potential link between mood and outdoor activity. In the exploratory plot, 
+"Low" homework days have a higher median outdoor time compared to "High" or "Medium" workload 
+days. Both show a positive relationship between free time and time spent outdoors, 
+reinforcing each other even though they’re framed differently.
+
+4a. What kinds of feedback did you get during week 9 in workshop or from the instructors?
+I was encouraged to simplify the mood categories and adjust the annotation placement for clarity. 
+I implemented this by reducing the number of moods to three and repositioning the labels so they wouldn’t overlap with the bars. I also added a bolded title and emphasized the emotional 
+framing, per suggestions to make the story more engaging.
 
