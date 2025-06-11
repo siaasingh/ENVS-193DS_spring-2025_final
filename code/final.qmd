@@ -1,5 +1,5 @@
 ---
-title: "ENVS 193DS Final Project: [Your Project Title Here]"
+title: "ENVS 193DS Final Project: Final Effective Data Visualization and Communication"
 author: "Siaa Singh"
 date: "06/10/2025"
 format: html
