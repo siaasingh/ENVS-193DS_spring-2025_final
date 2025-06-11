@@ -12,7 +12,7 @@ library(ggplot2)
 library(dplyr)
 
 # Read in the SST dataset
-sst <- read_csv("data/SST_update2023.csv")
+sst <- read_csv("../data/SST_update2023.csv")
 ```
 
 Problem 1 
@@ -39,7 +39,7 @@ library(tidyverse)
 library(lubridate)
 
 #  Read in the SST data
-sst <- read_csv("data/SST_update2023.csv")
+sst <- read_csv("../data/SST_update2023.csv")
 
 # Clean and summarize the SST data
 sst_clean <- sst %>%
