@@ -4,6 +4,17 @@ author: "Siaa Singh"
 date: "06/10/2025"
 format: html
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,   # suppress library startup messages
+  warning = FALSE    # suppress warnings
+)
+```
+
+
+
+
 ```{r}
 # Load required libraries
 library(tidyverse)
@@ -290,8 +301,9 @@ The figure from part h supports this trend, showing a clear decrease in occupanc
 that proximity to forest edge provides ecological advantages—such as better food availability or nesting habitat—which may be critical for Swift Parrots. The stronger edge effect in 2016 may also reflect variation in habitat quality or population size between the two years. 
 
 
-4a. 
+ 
 4a. Comparing Visualizations
+
 1. How are the visualizations different from each other in the way you have represented your data?
 The affective visualization (HW 3) uses color to represent mood and emphasizes emotional impact, with bold colors and labels to highlight personal experience. In contrast, the exploratory visualization
 (HW 2) presents the data more neutrally and statistically, using a boxplot to summarize the distribution of hours outdoors across homework load categories.
@@ -303,12 +315,12 @@ homework load).
 
 3. What patterns do you see in each visualization? Are these different between visualizations? 
 If so, why?
-In the affective plot, I see that days labeled "Happy" are associated with higher average outdoor hours, suggesting a potential link between mood and outdoor activity. In the exploratory plot, 
+In the effective plot, I see that days labeled "Happy" are associated with higher average outdoor hours, suggesting a potential link between mood and outdoor activity. In the exploratory plot, 
 "Low" homework days have a higher median outdoor time compared to "High" or "Medium" workload 
 days. Both show a positive relationship between free time and time spent outdoors, 
 reinforcing each other even though they’re framed differently.
 
-4a. What kinds of feedback did you get during week 9 in workshop or from the instructors?
+4. What kinds of feedback did you get during week 9 in workshop or from the instructors?
 I was encouraged to simplify the mood categories and adjust the annotation placement for clarity. 
 I implemented this by reducing the number of moods to three and repositioning the labels so they wouldn’t overlap with the bars. I also added a bolded title and emphasized the emotional 
 framing, per suggestions to make the story more engaging.
