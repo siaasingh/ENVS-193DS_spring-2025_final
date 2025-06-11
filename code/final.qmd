@@ -22,12 +22,7 @@ relationship between distance from the headwater and total nitrogen load. This i
 compare the mean nitrogen loads between different sources (urban land, atmospheric deposition, fertilizer, wastewater treatment, and grasslands), as indicated by the reference to 
 “average nitrogen load” and the overall p-value for group differences.
 
-b. Descriptive Statistics by Source: Including means and standard deviations for nitrogen 
-load by each source category would give readers a clearer picture of how nitrogen contributions 
-differ across land use types.Sample Size per Source: Providing the number of observations 
-per nitrogen source would help readers understand the reliability of the ANOVA results. 
-For example, if one group had a very small sample size, its contribution to the test outcome 
-might be questionable.
+b. Including means and standard deviations for nitrogen load by each source category would give readers a clearer picture of how nitrogen contributions differ across land use types.Providing the number of observations per nitrogen source would help readers understand the reliability of the ANOVA results. For example, if one group had a very small sample size, its contribution to the test outcome might be questionable.
 
 c. Nitrogen load increased with distance from the headwater, suggesting a spatial accumulation effect along the river. A correlation test was used to assess this relationship 
 (test: Pearson’s correlation; r = [correlation coefficient], p = 0.03, α = 0.05).
@@ -36,4 +31,69 @@ An ANOVA was used to compare group means (test: ANOVA; F = [test statistic], df 
 [degrees of freedom], p = 0.02, α = 0.05).
 
 
+2 a. 
+
+```{r}
+# Load required libraries
+library(tidyverse)
+library(lubridate)
+
+#  Read in the SST data
+sst <- read_csv("data/SST_update2023.csv")
+
+# Clean and summarize the SST data
+sst_clean <- sst %>%
+  # Extract year and month from the date column
+  mutate(
+    year = year(date),
+    month = month(date, label = TRUE, abbr = TRUE)
+  ) %>%
+  # Group by year and month to calculate monthly means
+  group_by(year, month) %>%
+  summarise(
+    mean_monthly_sst = mean(temp, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  # Filter for years 2018 to 2023
+  filter(year %in% 2018:2023)
+
+# View a random sample of 5 rows
+slice_sample(sst_clean, n = 5)
+
+# Display the structure of the cleaned data
+str(sst_clean)
+
+```
+
+2. b 
+```{r}
+# Filter data for the years of interest
+sst_filtered <- sst_clean %>%
+  filter(year %in% 2018:2023)
+
+# Create the plot
+ggplot(sst_filtered, aes(x = month, y = mean_monthly_sst, group
+                         = year, color = year)) +
+  # Add lines for each year
+  geom_line(size = 1) +
+  # Add points for each month
+  geom_point(size = 2) +
+  # Use a gradient scale: light to dark
+  scale_color_gradient(low = "lightblue", high = "navy") +
+  # Label the axes
+  labs(
+    x = "Month",
+    y = "Mean monthly sea surface temperature (°C)",
+    color = "Year"
+  ) +
+  # Put legend inside the plot
+  theme(
+    legend.position = c(0.15, 0.75),  
+    # top left-ish
+    legend.background = element_rect(fill = "white", color = "black"),
+    panel.background = element_blank(),
+    panel.border = element_rect(color = "black", fill = NA)
+  )
+
+```
 
